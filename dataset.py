@@ -2,64 +2,75 @@ from torch.utils.data import DataLoader, Dataset
 import os
 import torch
 import torchvision.transforms as transforms
-from PIL import Image
+from PIL import Image 
 import numpy as np
+from pathlib import Path 
+from typing import Union, Callable, Optional, List
+import cv2 
 
-class ImitationDataset(torch.utils.data.Dataset):
-    def __init__(self, data_dir, transforms=None,istrain=True):
-        self.data_dir = os.path.join(data_dir, 'train' if istrain else 'val')
-        self.features_path = os.path.join(self.data_dir, 'img')
-        self.labels_path = os.path.join(self.data_dir, 'label')
-        self.transforms = transforms
-        self.label_ids = os.listdir(self.labels_path)
-        print(self.label_ids)
+
+MAX_DEPTH = 4000 # 最大拍摄距离4m
+
+class ImitationDataset(Dataset):
+    def __init__(self, root: Union[Path, str], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224]) -> None:
+        
+        self.imgsz = imgsz
+
+        self.root = Path(root) 
+        self.images_root, self.labels_root = self.root / 'images', self.root / 'labels'
+        self.transforms_fun = transforms_fun
+
+        self.label_files = os.listdir(self.labels_root)
+        print(self.label_files)
+    
+    
     def __len__(self):
-        return len(self.label_ids)
+        return len(self.label_files)
 
     def __getitem__(self, idx):
-        label_id = self.label_ids[idx]
-        label_path = os.path.join(self.labels_path, label_id)
+        
+        
+        label_f = self.labels_root / self.label_files[idx]
+        file_name = label_f.stem
+        rgb_f = self.images_root / f"{file_name}.jpg"
+        depth_f = self.images_root / f"{file_name.replace('_', '_depth_')}.jpg"
 
-        """读取label对应的RGB-D图像"""
-        rgb_path = os.path.join(self.features_path, '{}.jpg'.format(label_id[:-4]))
-        deep_path=os.path.join(self.features_path, '{}-depth.jpg'.format(label_id[:-4]))
         # Read the image and annotation file
-        rgb = Image.open(rgb_path).convert('RGB')
-        depth=Image.open(deep_path)
-        # 将图像转换为NumPy数组
-        rgb_array = np.asarray(rgb)#(1544,2064,3)
-        depth_array = np.asarray(depth)#(1544,2064)  根据量程归一化
-        # 确保图像形状相同
-        rgbd=[]
-        if rgb_array.shape[:2] == depth_array.shape:
-            # 将深度通道转换为与RGB图像相同的形状
-            depth_channel = np.expand_dims(depth_array, axis=2)#[1544,2064,1]
-            # 合并RGB和深度通道
-            rgbd = np.concatenate((rgb_array, depth_channel), axis=2)#(1544,2064,4)
+        rgb_img = Image.open(rgb_f).convert('RGB')
+        depth_img = cv2.imread(f"{depth_f}", cv2.IMREAD_ANYDEPTH)
+        assert rgb_img.size == depth_img.shape[:2][::-1], f"{rgb_f} shape != {depth_f} shape"
+        
+        rgb_img = rgb_img.resize(self.imgsz)
+        depth_img = cv2.resize(depth_img, self.imgsz)
+        rgb_img = self.transforms_fun(rgb_img)
+        depth_img = transforms.ToTensor()((depth_img/MAX_DEPTH).astype(np.float32))
 
-        if self.transforms is not None:#对比度
-            rgbd = self.transforms(rgbd)
+        rgbd_img = torch.cat([rgb_img, depth_img])
 
-        #读取label
-        with open(label_path, 'r') as f:
-            label=f.readline()
+        with open(label_f, 'r') as f:
+            label = f.readline()
             label = label.strip().split()
-            label =[float(x) for x in label]
-            label=np.asarray(label)
+            label = np.array([float(x) for x in label], dtype=np.float32)
+            label = torch.from_numpy(label)
 
-        return rgbd,label
+        return rgbd_img, label
 
 
-def load_dataset(data_dir,batch_size):
-    train_iter = torch.utils.data.DataLoader(ImitationDataset(data_dir,istrain=True),batch_size, shuffle=True)
-    val_iter = torch.utils.data.DataLoader(ImitationDataset(data_dir,istrain=False),batch_size)
-    return train_iter,val_iter
+def load_dataset(root,batch_size):
+    transforms_fun = transforms.Compose([
+        transforms.ColorJitter(0.3, 0.3, 0.3),
+        transforms.GaussianBlur(5),
+        transforms.ToTensor(),
+        transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
+    ])
+    train_iter = DataLoader(ImitationDataset(root, transforms_fun), batch_size, shuffle=True)
+    return train_iter
 
 if __name__ == '__main__':
     print(os.getcwd())
-    data_dir='E:\\docs\\train_detection\\code\\active_vision\\Dataset'
+    root='Dataset/train'
     batch_size=3
-    train_iter,_=load_dataset(data_dir,batch_size)
+    train_iter=load_dataset(root,batch_size)
     X,y=next(iter(train_iter))
-    print('X.shape:',X.shape)#2*W*H*4
+    print('X.shape:',X.shape) 
     print('y.shape:',y.shape)
