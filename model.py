@@ -66,7 +66,7 @@ class ActiveDecisionModel(nn.Module):
 if __name__ == '__main__':
     model = ActiveDecisionModel(4)
 
-    x = torch.rand(size=(1, 4, 190, 1544))#2064*1544 image(RGB-D图像)
+    x = torch.rand(size=(16, 4, 224, 224))#2064*1544 image(RGB-D图像)
 
     for layer in model.network:
         x = layer(x)

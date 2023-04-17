@@ -1,0 +1,56 @@
+
+
+device: cuda:0
+save_root: result/run1
+
+model:
+  use_xavier_init: True
+  ckpt: null
+
+train:
+
+  epoch: 100
+
+
+  train_data:
+    root: /media/datum/wangjl/data/active_vision_dataset/train
+    batch_size: 64
+    imgsz: [224,224]
+    shuffle: True
+    num_workers: 2
+    transforms:
+      ColorJitter:
+        brightness: 0.5
+        contrast: 0.3
+        hue: 0.3
+      ToTensor: null
+      Normalize:
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+      # RandomErasing:
+      #   p: 0.3
+      #   scale: [0.005, 0.015]
+  val_data:
+    root: /media/datum/wangjl/data/active_vision_dataset/val
+    batch_size: 64
+    imgsz: [224,224]
+    shuffle: False
+    num_workers: 2
+    transforms:
+      ToTensor: null
+      Normalize:
+        mean: [0.5, 0.5, 0.5]
+        std: [0.5, 0.5, 0.5]
+
+  optimizer:
+    name: SGD
+    params: 
+      lr: 0.01
+      momentum: 0.9
+      weight_decay: 1e-4
+  
+  scheduler:
+    name: MultiStepLR
+    params:
+      milestones: [60, 80] 
+      gamma: 0.1

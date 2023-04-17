@@ -1,0 +1,16 @@
+epoch=1, lr=0.010, loss=0.133 
+Val_loss=0.125 
+save best model... 
+
+epoch=2, lr=0.010, loss=0.125 
+Val_loss=0.111 
+save best model... 
+
+epoch=3, lr=0.010, loss=0.111 
+Val_loss=0.094 
+save best model... 
+
+epoch=4, lr=0.010, loss=0.094 
+Val_loss=0.076 
+save best model... 
+
