@@ -9,7 +9,7 @@ from typing import Union, Callable, Optional, List
 import cv2 
 import open3d as o3d
 
-MAX_DEPTH = 600 # 拍摄范围 0-60cm
+MAX_DEPTH = 800 # 拍摄范围 0-60cm，有发现超过600的深度值，改成800
 
 class ImitationDataset(Dataset):
     def __init__(self, root: Union[Path, str], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224]) -> None:
@@ -62,16 +62,16 @@ class ImitationDataset(Dataset):
 
     @staticmethod
     def pcd2depth(pcd, img_shape):
-        pcd_array = np.asarray(pcd.points)[:,0].reshape(img_shape)
-        mask = np.isnan(pcd_array) | (pcd_array<0)
+        pcd_array = np.asarray(pcd.points)[:,2].reshape(img_shape)
+        mask = np.isnan(pcd_array)
         pcd_array[mask] = 0
         return pcd_array
 
 
 def load_dataset(root,batch_size):
     transforms_fun = transforms.Compose([
-        transforms.ColorJitter(0.3, 0.3, 0.3),
-        transforms.GaussianBlur(5),
+        # transforms.ColorJitter(0.3, 0.3, 0.3),
+        # transforms.GaussianBlur(5),
         transforms.ToTensor(),
         transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
     ])
@@ -84,4 +84,4 @@ if __name__ == '__main__':
     batch_size=1
     train_iter=load_dataset(root,batch_size)
     for x, y in train_iter:
-        print(x.shape, y.shape)
+        print(x[0, 0, :, :].min(), x[0, 1, :, :].min(), x[0, 2, :, :].min(), x[0, 3, :, :].min())

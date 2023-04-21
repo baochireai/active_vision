@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 import open3d as o3d
 
-MAX_DEPTH = 600
+MAX_DEPTH = 800
 @torch.no_grad()
 def infer(model, rgb_img, pcd, device):
     model.eval()
