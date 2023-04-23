@@ -7,9 +7,9 @@ import numpy as np
 from pathlib import Path 
 from typing import Union, Callable, Optional, List
 import cv2 
+import open3d as o3d
 
-
-MAX_DEPTH = 4000 # 最大拍摄距离4m
+MAX_DEPTH = 800 # 拍摄范围 0-60cm，有发现超过600的深度值，改成800
 
 class ImitationDataset(Dataset):
     def __init__(self, root: Union[Path, str], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224]) -> None:
@@ -33,12 +33,17 @@ class ImitationDataset(Dataset):
         label_f = self.labels_root / self.label_files[idx]
         file_name = label_f.stem
         rgb_f = self.images_root / f"{file_name}.jpg"
-        depth_f = self.images_root / f"{file_name.replace('_', '_depth_')}.jpg"
+        # depth_f = self.images_root / f"{file_name.replace('_', '_depth_')}.jpg"
+        pcd_f = rgb_f.with_suffix('.pcd')
 
         # Read the image and annotation file
         rgb_img = Image.open(rgb_f).convert('RGB')
-        depth_img = cv2.imread(f"{depth_f}", cv2.IMREAD_ANYDEPTH)
-        assert rgb_img.size == depth_img.shape[:2][::-1], f"{rgb_f} shape != {depth_f} shape"
+        # depth_img = cv2.imread(f"{depth_f}", cv2.IMREAD_ANYDEPTH)
+        pcd = o3d.io.read_point_cloud(str(pcd_f))
+        depth_img = self.pcd2depth(pcd, rgb_img.size[::-1])
+        
+        
+        # assert rgb_img.size == depth_img.shape[:2][::-1], f"{rgb_f} shape != {depth_f} shape"
         
         rgb_img = rgb_img.resize(self.imgsz)
         depth_img = cv2.resize(depth_img, self.imgsz)
@@ -55,11 +60,18 @@ class ImitationDataset(Dataset):
 
         return rgbd_img, label
 
+    @staticmethod
+    def pcd2depth(pcd, img_shape):
+        pcd_array = np.asarray(pcd.points)[:,2].reshape(img_shape)
+        mask = np.isnan(pcd_array)
+        pcd_array[mask] = 0
+        return pcd_array
+
 
 def load_dataset(root,batch_size):
     transforms_fun = transforms.Compose([
-        transforms.ColorJitter(0.3, 0.3, 0.3),
-        transforms.GaussianBlur(5),
+        # transforms.ColorJitter(0.3, 0.3, 0.3),
+        # transforms.GaussianBlur(5),
         transforms.ToTensor(),
         transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
     ])
@@ -68,9 +80,8 @@ def load_dataset(root,batch_size):
 
 if __name__ == '__main__':
     print(os.getcwd())
-    root='Dataset/train'
-    batch_size=3
+    root='/media/datum/wangjl/data/active_vision_dataset/train'
+    batch_size=1
     train_iter=load_dataset(root,batch_size)
-    X,y=next(iter(train_iter))
-    print('X.shape:',X.shape) 
-    print('y.shape:',y.shape)
+    for x, y in train_iter:
+        print(x[0, 0, :, :].min(), x[0, 1, :, :].min(), x[0, 2, :, :].min(), x[0, 3, :, :].min())

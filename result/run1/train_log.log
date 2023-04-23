@@ -1,16 +1,808 @@
-epoch=1, lr=0.010, loss=0.133 
-Val_loss=0.125 
+epoch=1, lr=0.010, loss=0.744 
+Val_loss=0.014 
 save best model... 
 
-epoch=2, lr=0.010, loss=0.125 
-Val_loss=0.111 
+epoch=2, lr=0.010, loss=0.777 
+Val_loss=0.014 
 save best model... 
 
-epoch=3, lr=0.010, loss=0.111 
-Val_loss=0.094 
+epoch=1, lr=0.010, loss=0.021 
+Val_loss=0.021 
 save best model... 
 
-epoch=4, lr=0.010, loss=0.094 
-Val_loss=0.076 
+epoch=2, lr=0.010, loss=0.021 
+Val_loss=0.020 
+save best model... 
+
+epoch=3, lr=0.010, loss=0.020 
+Val_loss=0.019 
+save best model... 
+
+epoch=4, lr=0.010, loss=0.019 
+Val_loss=0.017 
+save best model... 
+
+epoch=5, lr=0.010, loss=0.017 
+Val_loss=0.016 
+save best model... 
+
+epoch=6, lr=0.010, loss=0.016 
+Val_loss=0.015 
+save best model... 
+
+epoch=7, lr=0.010, loss=0.015 
+Val_loss=0.015 
+save best model... 
+
+epoch=8, lr=0.010, loss=0.015 
+Val_loss=0.014 
+save best model... 
+
+epoch=9, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=10, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=11, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=12, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=13, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=14, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=15, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=16, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=17, lr=0.010, loss=0.014 
+Val_loss=0.015 
+save best model... 
+
+epoch=18, lr=0.010, loss=0.015 
+Val_loss=0.015 
+save best model... 
+
+epoch=19, lr=0.010, loss=0.015 
+Val_loss=0.014 
+save best model... 
+
+epoch=20, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=21, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=22, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=23, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=24, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=25, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=26, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=27, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=28, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=29, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=30, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=31, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=32, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=33, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=34, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=35, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=36, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=37, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=38, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=39, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=40, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=41, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=42, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=43, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=44, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=45, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=46, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=47, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=48, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=49, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=50, lr=0.010, loss=0.013 
+Val_loss=0.014 
+save best model... 
+
+epoch=51, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=52, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=53, lr=0.010, loss=0.013 
+Val_loss=0.014 
+save best model... 
+
+epoch=54, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=55, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=56, lr=0.010, loss=0.013 
+Val_loss=0.014 
+save best model... 
+
+epoch=57, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=58, lr=0.010, loss=0.013 
+Val_loss=0.014 
+save best model... 
+
+epoch=59, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=60, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=61, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=62, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=63, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=64, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=65, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=66, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=67, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=68, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=69, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=70, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=71, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=72, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=73, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=74, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=75, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=76, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=77, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=78, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=79, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=80, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=81, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=82, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=83, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=84, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=85, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=86, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=87, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=88, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=89, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=90, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=91, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=92, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=93, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=94, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=95, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=96, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=97, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=98, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=99, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=100, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=1, lr=0.010, loss=0.019 
+Val_loss=0.019 
+save best model... 
+
+epoch=2, lr=0.010, loss=0.019 
+Val_loss=0.018 
+save best model... 
+
+epoch=3, lr=0.010, loss=0.018 
+Val_loss=0.017 
+save best model... 
+
+epoch=4, lr=0.010, loss=0.017 
+Val_loss=0.017 
+save best model... 
+
+epoch=5, lr=0.010, loss=0.017 
+Val_loss=0.016 
+save best model... 
+
+epoch=6, lr=0.010, loss=0.016 
+Val_loss=0.015 
+save best model... 
+
+epoch=7, lr=0.010, loss=0.015 
+Val_loss=0.014 
+save best model... 
+
+epoch=8, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=9, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=10, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=11, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=12, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=13, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=14, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=15, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=16, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=17, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=18, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=19, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=20, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=21, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=22, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=23, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=24, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=25, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=26, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=27, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=28, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=29, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=30, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=31, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=32, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=33, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=34, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=35, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=36, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=37, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=38, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=39, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=40, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=41, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=42, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=43, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=44, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=45, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=46, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=47, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=48, lr=0.010, loss=0.014 
+Val_loss=0.014 
+save best model... 
+
+epoch=49, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=50, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=51, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=52, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=53, lr=0.010, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=54, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=55, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=56, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=57, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=58, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=59, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=60, lr=0.010, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=61, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=62, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=63, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=64, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=65, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=66, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=67, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=68, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=69, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=70, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=71, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=72, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=73, lr=0.001, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=74, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=75, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=76, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=77, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=78, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=79, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=80, lr=0.001, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=81, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=82, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=83, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=84, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=85, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=86, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=87, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=88, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=89, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=90, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=91, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=92, lr=0.000, loss=0.014 
+Val_loss=0.013 
+save best model... 
+
+epoch=93, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=94, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=95, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=96, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=97, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=98, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=99, lr=0.000, loss=0.013 
+Val_loss=0.013 
+save best model... 
+
+epoch=100, lr=0.000, loss=0.013 
+Val_loss=0.013 
 save best model... 
 

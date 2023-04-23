@@ -13,7 +13,7 @@ train:
 
 
   train_data:
-    root: /media/datum/wangjl/data/active_vision_dataset/train
+    root: /media/datum/wangjl/data/active_vision_dataset/train2
     batch_size: 64
     imgsz: [224,224]
     shuffle: True
@@ -31,7 +31,7 @@ train:
       #   p: 0.3
       #   scale: [0.005, 0.015]
   val_data:
-    root: /media/datum/wangjl/data/active_vision_dataset/val
+    root: /media/datum/wangjl/data/active_vision_dataset/train2
     batch_size: 64
     imgsz: [224,224]
     shuffle: False
