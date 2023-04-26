@@ -10,55 +10,79 @@ import cv2
 import open3d as o3d
 
 MAX_DEPTH = 800 # 拍摄范围 0-60cm，有发现超过600的深度值，改成800
+IMAGE_DIR, LABELS_DIR = 'images', 'labels' 
 
 class ImitationDataset(Dataset):
-    def __init__(self, root: Union[Path, str], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224]) -> None:
-        
-        self.imgsz = imgsz
+    def __init__(
+            self, roots: List[Union[Path, str]], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224],
+            img_channel: str='rgbd', select_label_index: List[int]=[0,1,2,3,4,5] 
+        ) -> None:
 
-        self.root = Path(root) 
-        self.images_root, self.labels_root = self.root / 'images', self.root / 'labels'
+        self.roots = roots
+        self.data_list = self._bulid_data_list()
         self.transforms_fun = transforms_fun
+        self.imgsz = imgsz
+        if img_channel not in ['rgb', 'depth', 'rgbd']:
+            raise ValueError("channel must be in ['rgb', 'depth', 'rgbd'].")
+        self.img_channel = img_channel
+        self.select_label_index = select_label_index
 
-        self.label_files = os.listdir(self.labels_root)
-        print(self.label_files)
-    
+    def _bulid_data_list(self,):
+        data_list = []
+        for root in self.roots:
+            root = Path(root)
+            images_dir, labels_dir = root / IMAGE_DIR, root / LABELS_DIR
+            n = 0 
+            for txt_f in labels_dir.iterdir():
+                if txt_f.suffix in ['.txt']:
+                    jpg_f = images_dir / txt_f.with_suffix('.jpg').name
+                    pcd_f = images_dir / txt_f.with_suffix('.pcd').name
+                    if jpg_f.exists() and pcd_f.exists():
+                        data_list.append((str(jpg_f), str(pcd_f), str(txt_f)))
+                        n += 1
+                    else:
+                        print(f"{txt_f} does not have a corresponding jpg/pcd file.")
+            print(f">>>{root} has {n} images.")
+        return data_list
     
     def __len__(self):
-        return len(self.label_files)
+        return len(self.data_list)
 
     def __getitem__(self, idx):
         
+        jpg_f, pcd_f, txt_f = self.data_list[idx]
         
-        label_f = self.labels_root / self.label_files[idx]
-        file_name = label_f.stem
-        rgb_f = self.images_root / f"{file_name}.jpg"
-        # depth_f = self.images_root / f"{file_name.replace('_', '_depth_')}.jpg"
-        pcd_f = rgb_f.with_suffix('.pcd')
+        if self.img_channel == 'rgbd':
+            rgb_img = Image.open(jpg_f).convert('RGB')
+            pcd = o3d.io.read_point_cloud(pcd_f)
+            depth_img = self.pcd2depth(pcd, rgb_img.size[::-1])
+            rgb_img = rgb_img.resize(self.imgsz)
+            depth_img = cv2.resize(depth_img, self.imgsz)
+            rgb_img = self.transforms_fun(rgb_img)
+            depth_img = transforms.ToTensor()((depth_img/MAX_DEPTH).astype(np.float32))
+            data = torch.cat([rgb_img, depth_img])
+        
+        elif self.img_channel == 'rgb':
+            rgb_img = Image.open(jpg_f).convert('RGB').resize(self.imgsz)
+            data = self.transforms_fun(rgb_img)
+        
+        elif self.img_channel == 'depth':
+            rgb_img = Image.open(jpg_f)
+            pcd = o3d.io.read_point_cloud(str(pcd_f))
+            depth_img = self.pcd2depth(pcd, rgb_img.size[::-1])
+            depth_img = cv2.resize(depth_img, self.imgsz)
+            data = transforms.ToTensor()((depth_img/MAX_DEPTH).astype(np.float32))
+        
+        else:
+            raise NotImplementedError
 
-        # Read the image and annotation file
-        rgb_img = Image.open(rgb_f).convert('RGB')
-        # depth_img = cv2.imread(f"{depth_f}", cv2.IMREAD_ANYDEPTH)
-        pcd = o3d.io.read_point_cloud(str(pcd_f))
-        depth_img = self.pcd2depth(pcd, rgb_img.size[::-1])
-        
-        
-        # assert rgb_img.size == depth_img.shape[:2][::-1], f"{rgb_f} shape != {depth_f} shape"
-        
-        rgb_img = rgb_img.resize(self.imgsz)
-        depth_img = cv2.resize(depth_img, self.imgsz)
-        rgb_img = self.transforms_fun(rgb_img)
-        depth_img = transforms.ToTensor()((depth_img/MAX_DEPTH).astype(np.float32))
-
-        rgbd_img = torch.cat([rgb_img, depth_img])
-
-        with open(label_f, 'r') as f:
+        with open(txt_f, 'r') as f:
             label = f.readline()
             label = label.strip().split()
             label = np.array([float(x) for x in label], dtype=np.float32)
             label = torch.from_numpy(label)
 
-        return rgbd_img, label
+        return data, label[self.select_label_index]
 
     @staticmethod
     def pcd2depth(pcd, img_shape):
@@ -68,20 +92,33 @@ class ImitationDataset(Dataset):
         return pcd_array
 
 
+
 def load_dataset(root,batch_size):
     transforms_fun = transforms.Compose([
         # transforms.ColorJitter(0.3, 0.3, 0.3),
         # transforms.GaussianBlur(5),
         transforms.ToTensor(),
-        transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
+        # transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
     ])
     train_iter = DataLoader(ImitationDataset(root, transforms_fun), batch_size, shuffle=True)
     return train_iter
 
 if __name__ == '__main__':
     print(os.getcwd())
-    root='/media/datum/wangjl/data/active_vision_dataset/train'
-    batch_size=1
-    train_iter=load_dataset(root,batch_size)
-    for x, y in train_iter:
-        print(x[0, 0, :, :].min(), x[0, 1, :, :].min(), x[0, 2, :, :].min(), x[0, 3, :, :].min())
+    roots=['/media/datum/wangjl/data/active_vision_dataset/datasets4.26', '/media/datum/wangjl/data/active_vision_dataset/datasets4.26']
+    batch_size=32
+    transforms_fun = transforms.Compose([
+        # transforms.ColorJitter(0.3, 0.3, 0.3),
+        # transforms.GaussianBlur(5),
+        transforms.ToTensor(),
+        # transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
+    ])
+    dataset = ImitationDataset(roots, transforms_fun, img_channel='rgbd', select_label_index=[2])
+    dataloader = DataLoader(dataset, batch_size=32)
+    for i, (x, y) in enumerate(dataloader):
+        print(x.shape, y.shape)
+        img2d = transforms.ToPILImage()(x[1, :3, ...])
+        img3d = transforms.ToPILImage()(x[1, 3, ...])
+        img2d.save('img2d.png')
+        img3d.save('img3d.png')
+        break
