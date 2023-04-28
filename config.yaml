@@ -1,23 +1,26 @@
 
 
-device: cuda:0
-save_root: result/run1
+device: cuda:2
+save_root: result/train_xyz_offset_theta_MSELoss
 
 model:
   use_xavier_init: True
   ckpt: null
+  output_dim: 6    # regress 6 parameters
 
 train:
 
-  epoch: 100
+  epoch: 200
 
 
   train_data:
-    root: /media/datum/wangjl/data/active_vision_dataset/train2
+    root: [/media/datum/wangjl/data/active_vision_dataset/batch2_4.26, /media/datum/wangjl/data/active_vision_dataset/batch3_4.27]
     batch_size: 64
     imgsz: [224,224]
     shuffle: True
     num_workers: 2
+    img_channel: rgbd  # rgb, depth, rgbd
+    select_label_index: [0,1,2,3,4,5] # [offset_x, offset_y, offset_z, theta_x, theta_y, theta_z] select some values for regression
     transforms:
       ColorJitter:
         brightness: 0.5
@@ -25,32 +28,34 @@ train:
         hue: 0.3
       ToTensor: null
       Normalize:
-        mean: [0.5, 0.5, 0.5]
-        std: [0.5, 0.5, 0.5]
-      # RandomErasing:
-      #   p: 0.3
-      #   scale: [0.005, 0.015]
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
   val_data:
-    root: /media/datum/wangjl/data/active_vision_dataset/train2
+    root: [/media/datum/wangjl/data/active_vision_dataset/batch1_4.26]
     batch_size: 64
     imgsz: [224,224]
+    img_channel: rgbd
+    select_label_index: [0,1,2,3,4,5]
     shuffle: False
     num_workers: 2
     transforms:
       ToTensor: null
       Normalize:
-        mean: [0.5, 0.5, 0.5]
-        std: [0.5, 0.5, 0.5]
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
 
   optimizer:
-    name: SGD
+    name: Adam
     params: 
-      lr: 0.01
-      momentum: 0.9
-      weight_decay: 1e-4
+      lr: 0.001
+
   
   scheduler:
     name: MultiStepLR
     params:
-      milestones: [60, 80] 
+      milestones: [150, 180] 
       gamma: 0.1
+  
+  loss:
+    name: MSELoss # L1Loss, MSELoss, SmoothL1Loss, HuberLoss
