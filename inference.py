@@ -6,6 +6,7 @@ from dataset import ImitationDataset
 import cv2
 import numpy as np
 import open3d as o3d
+from pathlib import Path 
 
 MAX_DEPTH = 800
 @torch.no_grad()
@@ -21,32 +22,44 @@ def infer(model, rgb_img, pcd, device):
     transforms_fun = transforms.Compose([
         transforms.Resize(imgsz),
         transforms.ToTensor(),
-        transforms.Normalize([0.5,0.5,0.5], [0.5,0.5,0.5])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
     rgb_img = transforms_fun(rgb_img)
     depth_img = transforms.ToTensor()((depth_img/MAX_DEPTH).astype(np.float32))
 
     rgbd_img = torch.cat([rgb_img, depth_img]).to(device).unsqueeze(0)
 
-    print(rgbd_img.shape)
+    # print(rgbd_img.shape)
     output = model(rgbd_img)
     return output
 
 
 if __name__ == "__main__":
-    rgb_img = Image.open("/media/datum/wangjl/data/active_vision_dataset/train2/images/0_1681882162.029513.jpg")
-    pcd = o3d.io.read_point_cloud("/media/datum/wangjl/data/active_vision_dataset/train2/images/0_1681882162.029513.pcd")
-    
-    model = ActiveDecisionModel(4)
-    ckpt = torch.load("result/run1/last.pth")
+    model = ActiveDecisionModel(4, output_dim=6)
+    ckpt = torch.load("result/train_xyz_offset_theta_MSELoss/last.pth", map_location='cpu')
     model.load_state_dict(ckpt)
 
-    device = "cuda:0"
+    device = "cuda:2"
+    root = Path("/media/datum/wangjl/data/active_vision_dataset/batch1_4.26")
+    img_root = root / 'images'
+    label_root = root / 'labels'
 
-    output = infer(model, rgb_img, pcd, device)
-    print(output)
-
-    with open("/media/datum/wangjl/data/active_vision_dataset/train2/labels/0_1681882162.029513.txt", "r") as f:
-        lines = f.readlines()
+    loss = []
     
-    print("ground thruth: ", lines)
+    for i in label_root.iterdir():
+        imgf = img_root / i.with_suffix('.jpg').name
+        pcdf = img_root / i.with_suffix('.pcd').name
+        rgb_img = Image.open(imgf)
+        pcd = o3d.io.read_point_cloud(str(pcdf))
+
+        output = infer(model, rgb_img, pcd, device)
+        output = output.cpu().numpy()[0]
+        # print()
+
+        with open(i, "r") as f:
+            lines = f.readline()
+        ground_thruth = [float(f"{float(i):.4f}") for i in lines.strip().split(' ')]
+        loss.append(abs(output-ground_thruth))
+        print(f"output, ground thruth:  {output}, {ground_thruth}")
+
+    print('average MAELoss = ', sum(loss)/len(loss))

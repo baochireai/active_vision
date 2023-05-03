@@ -34,7 +34,7 @@ class ActiveDecisionModel(nn.Module):
     """
     GoogleNet使用9个Inception块和最大池化层的（降低模型维度，复杂度）堆叠进行预测
     """
-    def __init__(self,in_channels,**kwargs):
+    def __init__(self,in_channels, output_dim=6,**kwargs):
         super(ActiveDecisionModel,self).__init__(**kwargs)
         self.b1=nn.Sequential(nn.Conv2d(in_channels,64,kernel_size=7,stride=2,padding=3),#(w-7+1+6)/2 高宽减半
                               nn.ReLU(),
@@ -59,7 +59,7 @@ class ActiveDecisionModel(nn.Module):
                    nn.Flatten())#channel as output
         self.network=nn.Sequential(self.b1,self.b2,self.b3,self.b4,self.b5,
                                    nn.Linear(1024,128),
-                                   nn.Linear(128,6))
+                                   nn.Linear(128,output_dim))
     def forward(self,x):
         return self.network(x)
 
