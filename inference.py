@@ -1,3 +1,10 @@
+'''
+Date: 2023-04-11 13:54:33
+FirstEditors: pystar360 pystar360@py-star.com
+LastEditors: pystar360 pystar360@py-star.com
+LastEditTime: 2023-05-18 15:27:46
+FilePath: /active_vision_decision_model/inference.py
+'''
 from model import ActiveDecisionModel
 import torch
 from torchvision import transforms
@@ -31,16 +38,17 @@ def infer(model, rgb_img, pcd, device):
 
     # print(rgbd_img.shape)
     output = model(rgbd_img)
-    return output
+    output = output.cpu() / ImitationDataset.scale
+    return output.numpy()
 
 
 if __name__ == "__main__":
     model = ActiveDecisionModel(4, output_dim=6)
-    ckpt = torch.load("result/train_xyz_offset_theta_MSELoss/last.pth", map_location='cpu')
+    ckpt = torch.load("result/L1Loss/last.pth", map_location='cpu')
     model.load_state_dict(ckpt)
 
     device = "cuda:2"
-    root = Path("/media/datum/wangjl/data/active_vision_dataset/batch1_4.26")
+    root = Path("/media/datum/wangjl/data/active_vision_dataset/datasets5.16/val")
     img_root = root / 'images'
     label_root = root / 'labels'
 
@@ -53,12 +61,12 @@ if __name__ == "__main__":
         pcd = o3d.io.read_point_cloud(str(pcdf))
 
         output = infer(model, rgb_img, pcd, device)
-        output = output.cpu().numpy()[0]
+        # output = output.cpu().numpy()[0] 
         # print()
 
         with open(i, "r") as f:
             lines = f.readline()
-        ground_thruth = [float(f"{float(i):.4f}") for i in lines.strip().split(' ')]
+        ground_thruth = np.array([float(f"{float(i):.4f}") for i in lines.strip().split(' ')])
         loss.append(abs(output-ground_thruth))
         print(f"output, ground thruth:  {output}, {ground_thruth}")
 
