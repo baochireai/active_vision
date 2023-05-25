@@ -1,8 +1,8 @@
 '''
 Date: 2023-04-11 13:54:33
 FirstEditors: pystar360 pystar360@py-star.com
-LastEditors: pystar360 pystar360@py-star.com
-LastEditTime: 2023-05-18 15:27:46
+LastEditors: Senxu He hesenxu@py-star.com
+LastEditTime: 2023-05-25 16:43:36
 FilePath: /active_vision_decision_model/inference.py
 '''
 from model import ActiveDecisionModel
@@ -37,23 +37,22 @@ def infer(model, rgb_img, pcd, device):
     rgbd_img = torch.cat([rgb_img, depth_img]).to(device).unsqueeze(0)
 
     # print(rgbd_img.shape)
-    output = model(rgbd_img)
-    output = output.cpu() / ImitationDataset.scale
+    output = model(rgbd_img).cpu()
+    # output = (output.cpu()-ImitationDataset.b) / ImitationDataset.k
     return output.numpy()
 
 
 if __name__ == "__main__":
     model = ActiveDecisionModel(4, output_dim=6)
-    ckpt = torch.load("result/L1Loss/last.pth", map_location='cpu')
+    ckpt = torch.load("result/L1Loss5.25_bak/last.pth", map_location='cpu')
     model.load_state_dict(ckpt)
 
     device = "cuda:2"
-    root = Path("/media/datum/wangjl/data/active_vision_dataset/datasets5.16/val")
+    root = Path("/media/datum/wangjl/data/active_vision_dataset/val")
     img_root = root / 'images'
     label_root = root / 'labels'
 
     loss = []
-    
     for i in label_root.iterdir():
         imgf = img_root / i.with_suffix('.jpg').name
         pcdf = img_root / i.with_suffix('.pcd').name
@@ -69,5 +68,6 @@ if __name__ == "__main__":
         ground_thruth = np.array([float(f"{float(i):.4f}") for i in lines.strip().split(' ')])
         loss.append(abs(output-ground_thruth))
         print(f"output, ground thruth:  {output}, {ground_thruth}")
+        output = [float(f'{value:.4f}') for value in output[0].tolist()]
 
     print('average MAELoss = ', sum(loss)/len(loss))

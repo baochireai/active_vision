@@ -13,7 +13,11 @@ MAX_DEPTH = 800 # 拍摄范围 0-60cm，有发现超过600的深度值，改成8
 IMAGE_DIR, LABELS_DIR = 'images', 'labels' 
 
 class ImitationDataset(Dataset):
-    scale = torch.tensor([5, 10, 1, 1, 40, 200])
+    # k = torch.tensor(([2.28, 1.6, 1.78, 1., 2.28, 2.]))
+    # b = torch.tensor(([-0.11, -0.16, -0.444,  0.2, 0.11, 0.]))
+    # k = torch.ones(6)
+    # b = torch.zeros(6)
+
     def __init__(
             self, roots: List[Union[Path, str]], transforms_fun: Optional[Callable], imgsz: Optional[List[int]]=[224,224],
             img_channel: str='rgbd', select_label_index: List[int]=[0,1,2,3,4,5] 
@@ -83,7 +87,8 @@ class ImitationDataset(Dataset):
             label = np.array([float(x) for x in label], dtype=np.float32)
             label = torch.from_numpy(label)
 
-        return data, label[self.select_label_index]*self.scale
+        # return data, label[self.select_label_index]*self.k + self.b
+        return data, label[self.select_label_index]
 
     @staticmethod
     def pcd2depth(pcd, img_shape):
